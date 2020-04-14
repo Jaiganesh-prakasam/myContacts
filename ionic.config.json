@@ -1,5 +1,7 @@
 {
   "name": "myContacts",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
