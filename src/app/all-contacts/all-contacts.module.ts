@@ -10,6 +10,8 @@ import { AllContactsPage } from './all-contacts.page';
 import { SearchPipe } from '../pipe/search.pipe';
 import { SortPipe } from '../pipe/sort.pipe';
 import { InitialsPipe } from '../pipe/initials.pipe';
+import { Contacts } from '@ionic-native/contacts/ngx';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import { InitialsPipe } from '../pipe/initials.pipe';
     FormsModule,
     IonicModule,
     AllContactsPageRoutingModule,
+    HttpClientModule,
   ],
   declarations: [AllContactsPage, SortPipe, SearchPipe, InitialsPipe],
+  providers: [Contacts],
 })
 export class AllContactsPageModule {}
