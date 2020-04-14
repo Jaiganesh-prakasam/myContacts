@@ -8,11 +8,16 @@
 
 <ion-content [fullscreen]="true">
   <div>
-    <div>
-      <ion-button> All contacts </ion-button>
+    <div class="horizontal-center">
+      <ion-button (click)="toContacts()"> All contacts </ion-button>
     </div>
-    <div>
-      <input />
+    <div class="vertical-center">
+      <ion-item *ngIf="_numberSelected.contactNumber">
+        <ion-label>Number selected</ion-label>&nbsp;&nbsp;&nbsp;
+        <ion-input type="number" name="title" [disabled]="true">
+          {{_numberSelected.contactNumber}}
+        </ion-input>
+      </ion-item>
     </div>
   </div>
 </ion-content>

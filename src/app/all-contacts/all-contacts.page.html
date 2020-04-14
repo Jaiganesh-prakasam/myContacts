@@ -1,9 +1,40 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>allContacts</ion-title>
+    <ion-title>All Contacts</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div>
+    <ion-item style="position: sticky; top: 20;">
+      <ion-label>Search</ion-label>
+      <ion-input type="text" #searchtext></ion-input>
+    </ion-item>
+    <ion-list>
+      <div
+        *ngFor="let i of contactList | search : searchtext.value | sort: {property: 'name', order: 1}"
+      >
+        <ion-item>
+          <ion-avatar
+            item-left
+            [style.backgroundColor]="randomColor()"
+            style="display: flex; align-items: center; justify-content: center;"
+          >
+            {{ i.name | initials }} </ion-avatar
+          >&nbsp;&nbsp;&nbsp;
+          <ion-label (click)="goHome(i.number.Home)">{{i.name}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="i.number.mobile">
+          <ion-avatar
+            item-left
+            [style.backgroundColor]="randomColor()"
+            style="display: flex; align-items: center; justify-content: center;"
+          >
+            {{ i.name | initials }} </ion-avatar
+          >&nbsp;&nbsp;&nbsp;
+          <ion-label (click)="goHome(i.number.mobile)">{{i.name}}</ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
 </ion-content>
