@@ -95,7 +95,6 @@ export class AllContactsPage implements OnInit, AfterViewInit {
 
   loadData(event) {
     console.log('Done');
-
     if (this.maximumLength < this.originalContactListData.length) {
       let tempMax = this.maximumLength;
       for (let i = tempMax - 1; i <= tempMax + 19; i++) {
@@ -107,6 +106,7 @@ export class AllContactsPage implements OnInit, AfterViewInit {
           this.cdRef.detectChanges();
         } else {
           this.originalContactList.push(this.originalContactListData[i]);
+          this.cdRef.detectChanges();
         }
         this.maximumLength++;
       }
@@ -118,14 +118,18 @@ export class AllContactsPage implements OnInit, AfterViewInit {
       event.target.disabled = true;
     }
   }
+
   randomColor() {
     let color = '#' + Math.floor(Math.random() * 16777215).toString(16);
     return color;
   }
   goHome(phoneNumber) {
-    console.log(phoneNumber);
-    let numstr = '' + phoneNumber;
+    let numstr = phoneNumber.toString();
+    console.log(numstr);
+    numstr = numstr.trim();
+    numstr = numstr.replace(/ +/g, '');
     numstr = numstr.slice(-10);
+    console.log(numstr);
     this._numberSelectedService.contactNumber = Number(numstr);
     this.router.navigate(['home']);
   }
