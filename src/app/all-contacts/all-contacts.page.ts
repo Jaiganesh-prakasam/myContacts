@@ -47,7 +47,7 @@ export class AllContactsPage implements OnInit, AfterViewInit {
           this.contactListLoader(data);
         });
     } else {
-      // offline to work in the web view
+      // to load offline sample data to work in the web view
       this.http
         .get('../../assets/sampleContact.json')
         .subscribe((data: Array<Contact>) => {
@@ -57,15 +57,16 @@ export class AllContactsPage implements OnInit, AfterViewInit {
   }
 
   contactListLoader(data) {
-    // to remove the contacts which has no phone number
     console.log(data);
     data = data
       .filter((a) => {
+        // to remove the contacts which has no phone number
         if (a.phoneNumbers !== null) {
           return true;
         }
       })
       .sort((a, b) => {
+        // to sort according to the first name
         if (
           a['_objectInstance']['displayName'] <
           b['_objectInstance']['displayName']
@@ -81,6 +82,7 @@ export class AllContactsPage implements OnInit, AfterViewInit {
         }
       });
     console.log(data);
+    // ot use in loadExtraData  using infinite scroll
     this.originalContactListData = data;
     for (let i = 0; i <= 19; i++) {
       if (this.originalContactList) {
@@ -89,11 +91,11 @@ export class AllContactsPage implements OnInit, AfterViewInit {
       } else {
         this.originalContactList.push(data[i]);
       }
-      this.maximumLength++;
+      this.maximumLength++; // to track actual data loaded on screen
     }
   }
 
-  loadData(event) {
+  loadExtraData(event) {
     console.log('Done');
     if (this.maximumLength < this.originalContactListData.length) {
       let tempMax = this.maximumLength;
@@ -111,7 +113,7 @@ export class AllContactsPage implements OnInit, AfterViewInit {
         this.maximumLength++;
       }
     }
-    event.target.complete();
+    event.target.complete(); // to disable loader
     // App logic to determine if all data is loaded
     // and disable the infinite scroll
     if (this.maximumLength > this.originalContactListData.length) {
