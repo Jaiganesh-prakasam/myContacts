@@ -5,5 +5,8 @@
 ### ion-infinite-scroll implemented
 ### ChangeDetectionStrategy.OnPush implemented
 ### ChangeDetectorRef used for change detection
+### Sort and Search of contact list acheived using pipe
+### Initials of Name captured using pipe
+### dynamic color for the contact avatar
 
 ![](myContactsPreview.gif)
