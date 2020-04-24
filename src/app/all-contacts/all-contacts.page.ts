@@ -96,29 +96,41 @@ export class AllContactsPage implements OnInit, AfterViewInit {
   }
 
   loadExtraData(event) {
-    console.log('Done');
-    if (this.maximumLength < this.originalContactListData.length) {
-      let tempMax = this.maximumLength;
-      for (let i = tempMax - 1; i <= tempMax + 19; i++) {
-        if (this.originalContactList) {
-          this.originalContactList = [
-            ...this.originalContactList,
-            this.originalContactListData[i],
-          ];
-          this.cdRef.detectChanges();
-        } else {
-          this.originalContactList.push(this.originalContactListData[i]);
-          this.cdRef.detectChanges();
-        }
-        this.maximumLength++;
+    this.extraDataLoaderPromise().then((value) => {
+      event.target.complete(); // to disable loader
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (this.maximumLength > this.originalContactListData.length) {
+        event.target.disabled = true;
       }
-    }
-    event.target.complete(); // to disable loader
-    // App logic to determine if all data is loaded
-    // and disable the infinite scroll
-    if (this.maximumLength > this.originalContactListData.length) {
-      event.target.disabled = true;
-    }
+    });
+  }
+  extraDataLoaderPromise() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // to load data if there is remaining
+        if (this.maximumLength < this.originalContactListData.length) {
+          let tempMax = this.maximumLength;
+          for (let i = tempMax - 1; i <= tempMax + 19; i++) {
+            if (this.originalContactList) {
+              if (this.originalContactListData[i]) {
+                this.originalContactList = [
+                  ...this.originalContactList,
+                  this.originalContactListData[i],
+                ];
+              }
+            } else {
+              this.originalContactList.push(this.originalContactListData[i]);
+            }
+            this.maximumLength++;
+            this.cdRef.detectChanges();
+          }
+        }
+        console.log('promise completed');
+        resolve(this.maximumLength);
+      }, 0);
+    });
   }
 
   randomColor() {
